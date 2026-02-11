@@ -1,0 +1,40 @@
+import random
+
+class Enviroment:
+  def __init__(self,student_present='NO',light_state='Off'):
+    self.student_present = student_present
+    self.light_state = light_state
+  def get_percept(self):
+    return {'student_present':self.student_present,'light_state':self.light_state}
+  def open_lights(self):
+    if self.light_state == 'Off':
+      self.light_state = 'On'
+  def close_lights(self):
+    if self.light_state == 'On':
+      self.light_state = 'Off'
+class ModelBasedAgent:
+  def __init__(self):
+    self.model={'student_present':'NO','light_state':'Off'}
+  def Act(self,percept):
+    self.model.update(percept)
+    if self.model['student_present'] == 'YES' and self.model['light_state'] == 'Off':
+      return 'Turn Lights ON'
+    elif self.model['student_present'] == 'NO' and self.model['light_state'] == 'On':
+      return 'Turn Lights OFF'
+    else :
+      return 'No action'
+def Run_Agent(env,agent,steps):
+  for i in range(steps):
+    # Randomly set student presence for each step
+    env.student_present = random.choice(['YES', 'NO'])
+    percept = env.get_percept()
+    action=agent.Act(percept)
+    print(f"Step {i+1}: Percept: {percept} --> Action: {action} --> Agent Model: {agent.model}")
+    if action == 'Turn Lights ON':
+      env.open_lights()
+    elif action == 'Turn Lights OFF':
+      env.close_lights()
+
+env = Enviroment(student_present='YES') 
+agent= ModelBasedAgent()
+Run_Agent(env,agent,8)
