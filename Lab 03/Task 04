@@ -1,0 +1,35 @@
+class Enviroment:
+  def __init__(self,restraunts=None):
+    if restraunts == None:
+      restraunts = {'A':7,'B':9}
+    self.restraunts = restraunts
+  def get_percept(self):
+    return self.restraunts
+
+class Utility_Based_Agent:
+  def __init__(self,distances=None):
+    if distances == None:
+        distances = {'A':3,'B':5}
+    self.distances = distances
+    
+  def utility(self, review, restraunt):
+    return review - self.distances[restraunt]
+  def Act(self,percept):
+    best_restraunt=None
+    best_utility=-float('inf')
+    for restraunt,review in percept.items():
+      util = self.utility(review, restraunt)
+      print(f"Restraunt {restraunt} Utility = {util}")
+      if util>best_utility:
+        best_restraunt=restraunt
+        best_utility=util
+    return best_restraunt
+def Run_Agent(env,agent):
+  percept=env.get_percept()
+  best_restraunt=agent.Act(percept)
+  print(f"Selected Restraunt: {best_restraunt}")
+
+
+agent=Utility_Based_Agent()
+env=Enviroment()
+Run_Agent(env,agent)
