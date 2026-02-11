@@ -1,0 +1,21 @@
+import random
+class LearningAgent:
+    def __init__(self):
+        self.Q = {'Play': 0, 'Rest': 0}
+        self.rewards = {'Play': 5, 'Rest': 1}
+        self.alpha = 0.1
+        self.actions = ['Play', 'Rest']
+    def update_Q(self, action):
+        reward = self.rewards[action]
+        self.Q[action] = self.Q[action] + self.alpha * (reward - self.Q[action])
+    def run(self, steps=10):
+        print("Learning Agent Started\n")
+        for i in range(steps):
+            action = random.choice(self.actions)
+            reward = self.rewards[action]
+            self.update_Q(action)
+            print(f"Step {i+1}: Action {action} Reward {reward}")
+        print("\nQ-table Updated")
+        print(self.Q)
+agent = LearningAgent()
+agent.run()
