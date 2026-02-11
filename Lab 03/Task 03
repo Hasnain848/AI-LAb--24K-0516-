@@ -1,0 +1,28 @@
+class Enviroment:
+  def __init__(self):
+    self.subjects=["AI", "Math", "Physics"]
+    self.completed=[]
+  def get_percept(self):
+    return self.subjects,self.completed
+  def studysubject(self,subjects):
+    self.completed.append(subjects)
+class GoalBasedAgent:
+  def __init__(self):
+    self.goal="All Subjects Completed"
+  def Act(self,percept,env):
+    subjects,completed=percept
+    for sub in subjects:
+      if sub not in completed:
+        print(f"Studying {sub}")
+        env.studysubject(sub)
+    if len(subjects)==len(completed):
+      return "Goal Achieved"
+def Run_Agent(env,agent):
+  percept=env.get_percept()
+  action=agent.Act(percept,env)
+  if action == "Goal Achieved":
+    print("Goal Achieved: All subjects completed")
+
+env = Enviroment()
+agent=GoalBasedAgent()
+Run_Agent(env,agent)
