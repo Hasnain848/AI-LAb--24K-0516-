@@ -1,0 +1,24 @@
+class Enviroment:
+  def __init__(self,traffic_level='Heavy'):
+    self.traffic_level = traffic_level
+  def get_percept(self):
+    return 'Heavy traffic' if self.traffic_level == 'Heavy' else 'Light traffic'
+class ReflexAgent:
+  def __init__(self):
+    pass
+  def Act(self,percept):
+    if percept == 'Heavy traffic':
+      return 'Extend Green Time'
+    elif percept == 'Light traffic':
+      return 'Normal Green'
+def Run_Agent(env,agent):
+  percept = env.get_percept()
+  action = agent.Act(percept)
+  print(f"Percept: {percept} --> Action: {action}")
+
+env1 = Enviroment()
+env2 = Enviroment('Light')
+agent = ReflexAgent()
+Run_Agent(env1,agent)
+Run_Agent(env2,agent)
+
