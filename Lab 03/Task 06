@@ -1,0 +1,42 @@
+class Environment:
+    def __init__(self):
+        self.rooms = {
+            "a": "safe", "b": "safe", "c": "fire",
+            "d": "safe", "e": "fire", "f": "safe",
+            "g": "safe", "h": "safe", "j": "fire"
+        }
+        self.path = ["a", "b", "c", "d", "e", "f", "g", "h", "j"]
+    def get_percept(self, room):
+        return self.rooms[room]
+    def extinguish_fire(self, room):
+        self.rooms[room] = "safe"
+    def display_environment(self):
+        print("Environment Status:")
+        for i in range(9):
+            if self.rooms[self.path[i]] == "fire":
+                print("fire", end=" ")
+            else:
+                print(" ", end=" ")
+            if (i + 1) % 3 == 0:
+                print()
+        print("----------------------\n")
+class FireFightingRobot:
+    def __init__(self):
+        self.path = ["a", "b", "c", "d", "e", "f", "g", "h", "j"]
+    def run(self, env):
+        print("Firefighting Robot Started\n")
+        for room in self.path:
+            print(f"Robot moved to room '{room}'")
+            status = env.get_percept(room)
+            if status == "fire":
+                print("Fire detected! Extinguishing...")
+                env.extinguish_fire(room)
+            else:
+                print("No fire in this room.")
+            env.display_environment()
+        print("All fires extinguished!")
+        print("Final Environment:")
+        env.display_environment()
+environment = Environment()
+robot = FireFightingRobot()
+robot.run(environment)
