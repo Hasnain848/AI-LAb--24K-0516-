@@ -21,3 +21,11 @@ X_scaled = scaler.fit_transform(X)
 kmeans2 = KMeans(n_clusters=3, random_state=42)
 df['Cluster_Scaled'] = kmeans2.fit_predict(X_scaled)
 print(df.head())
+
+#Analysis
+#Without Scaling: Mileage dominates (very large numbers) Clusters mainly based on mileage With Scaling: All features contribute Better grouping (fuel + maintenance + type)
+
+#Conclusion:
+
+#Feature scaling is necessary when features have different units.
+
